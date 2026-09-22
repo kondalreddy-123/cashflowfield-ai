@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CashFlowShield AI — Predict the Cash Leak. Protect the Cash Before It Leaves.</title>
+  <meta name="description" content="Clean white professional AI cash-flow risk management prototype for businesses. Predict cash leaks, RTO drag, and payment delay risks before funds leave.">
+
+  <!-- Typography: Outfit & Inter Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icons: Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <!-- Three.js 3D WebGL Library CDN (Optional Holographic Shield) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Clean White Fintech Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       APP HEADER & NAVIGATION
+       ══════════════════════════════════════════════════════════════════════════ -->
+  <header class="app-header">
+    <div class="header-container">
+      <!-- Brand & Tagline -->
+      <div class="brand-section">
+        <div class="brand-logo-icon">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <div class="brand-info">
+          <h1>CashFlowShield <span class="ai-badge">AI</span></h1>
+          <div class="brand-tagline">Predict the Cash Leak. Protect the Cash Before It Leaves.</div>
+        </div>
+      </div>
+
+      <!-- Clean Navigation Bar -->
+      <nav class="header-nav" aria-label="Main Navigation">
+        <button type="button" class="nav-link active" data-tab="section-dashboard">
+          <i class="fa-solid fa-gauge-high"></i> <span>Dashboard</span>
+        </button>
+        <button type="button" class="nav-link" data-tab="section-risk-center">
+          <i class="fa-solid fa-triangle-exclamation"></i> <span>Risk Center</span>
+        </button>
+        <button type="button" class="nav-link" data-tab="section-forecast">
+          <i class="fa-solid fa-chart-line"></i> <span>Forecast</span>
+        </button>
+        <button type="button" class="nav-link" data-tab="section-what-if">
+          <i class="fa-solid fa-sliders"></i> <span>What-If</span>
+        </button>
+        <button type="button" class="nav-link" data-tab="section-reports">
+          <i class="fa-solid fa-file-invoice"></i> <span>Reports</span>
+        </button>
+      </nav>
+
+      <!-- Header Controls -->
+      <div class="header-controls">
+        <!-- Scenario Presets -->
+        <div class="control-group">
+          <select id="presetSelector" class="select-custom" aria-label="Business Scenario Preset">
+            <option value="aurathreads">AuraThreads (D2C High-RTO)</option>
+            <option value="zenith_msme">Zenith Tools (B2B MSME)</option>
+            <option value="nexal_export">Nexal Global (Exporter)</option>
+            <option value="cash_crunch">HyperPulse (Cash Crunch)</option>
+          </select>
+        </div>
+
+        <!-- Currency Switcher -->
+        <div class="currency-toggle">
+          <button type="button" class="curr-btn active" id="btnCurrInr" title="Display in INR (₹)">₹ INR</button>
+          <button type="button" class="curr-btn" id="btnCurrUsd" title="Display in USD ($)">$ USD</button>
+        </div>
+
+        <!-- Upload CSV CTA -->
+        <button type="button" class="btn-header-csv" id="btnOpenCsvModal" title="Upload business CSVs">
+          <i class="fa-solid fa-file-arrow-up"></i> <span>Upload CSV</span>
+        </button>
+
+        <!-- Quick Try Demo CTA -->
+        <button type="button" class="btn-header-demo" id="btnQuickDemoHeader" title="Load fictional demo dataset">
+          <i class="fa-solid fa-flask"></i> <span>Try Demo</span>
+        </button>
+
+        <!-- 3D Holographic Matrix View Toggle -->
+        <button type="button" class="btn-header-csv" id="btnToggle3DView" title="Inspect 3D Holographic Shield">
+          <i class="fa-solid fa-cube"></i> <span>3D Matrix</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Non-Custodial & Privacy Notice Bar -->
+  <aside class="safety-bar">
+    <div class="safety-container">
+      <div class="safety-tag">
+        <i class="fa-solid fa-shield-check"></i>
+        <span>Non-Custodial Architecture: AI Predicts & Recommends • User Approval Strictly Required for Financial Actions</span>
+      </div>
+      <div class="privacy-tag">
+        <i class="fa-solid fa-lock"></i>
+        <span>Privacy: Use authorized or simulated business data. Do not upload passwords, PINs, OTPs, or CVVs.</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       MAIN CONTENT CONTAINER
+       ══════════════════════════════════════════════════════════════════════════ -->
+  <main class="main-wrapper">
+
+    <!-- ══════════════════════════════════════════════════════════════════════════
+         HERO: START CASH ANALYSIS (ONBOARDING WORKFLOW)
+         ══════════════════════════════════════════════════════════════════════════ -->
+    <section class="start-analysis-card" aria-label="Start Cash Analysis">
+      <div class="start-header-row">
+        <div>
+          <div class="start-title">
+            <i class="fa-solid fa-calculator"></i>
+            <span>Start Cash Analysis</span>
+          </div>
+          <div class="start-subtitle">
+            Evaluate cash leaks, forecast your balances, and protect liquidity before commitments mature.
+          </div>
+        </div>
+
+        <!-- Two Clear Start Options -->
+        <div class="start-options-group">
+          <button type="button" class="btn-option btn-option-demo" id="btnStartDemo">
+            <i class="fa-solid fa-flask"></i>
+            <span>Option 1: Try Demo</span>
+          </button>
+          <button type="button" class="btn-option btn-option-manual active" id="btnStartManual">
+            <i class="fa-solid fa-keyboard"></i>
+            <span>Option 2: Enter Your Data</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 7-Field Clean Input Form -->
+      <div class="analysis-form-wrapper" id="analysisFormWrapper">
+        <form id="cashFlowAnalysisForm" class="form-grid-7" onsubmit="return false;">
+          <!-- Field 1: Current Balance -->
+          <div class="form-field">
+            <label class="form-label" for="inpCurrentBalance">
+              <i class="fa-solid fa-wallet" style="color:var(--primary-color);"></i> 1. Current Available Balance
+            </label>
+            <div class="input-group-clean">
+              <span class="input-addon" id="prefixCurrentBalance">₹</span>
+              <input type="number" step="any" class="form-input-clean" id="inpCurrentBalance" name="current_balance" value="100000" placeholder="100000" required>
+            </div>
+            <span class="form-hint">Actual liquid cash currently available</span>
+          </div>
+
+          <!-- Field 2: Expected Inflows -->
+          <div class="form-field">
+            <label class="form-label" for="inpExpectedInflows">
+              <i class="fa-solid fa-arrow-down-left" style="color:var(--safe-color);"></i> 2. Expected Customer Inflows
+            </label>
+            <div class="input-group-clean">
+              <span class="input-addon" id="prefixExpectedInflows">₹</span>
+              <input type="number" step="any" class="form-input-clean" id="inpExpectedInflows" name="expected_inflows" value="40000" placeholder="40000" required>
+            </div>
+            <span class="form-hint">Confirmed customer sales settlements</span>
+          </div>
+
+          <!-- Field 3: Upcoming Payments / Debits -->
+          <div class="form-field">
+            <label class="form-label" for="inpUpcomingOutflows">
+              <i class="fa-solid fa-arrow-up-right-from-square" style="color:var(--risk-color);"></i> 3. Upcoming Payments / Debits
+            </label>
+            <div class="input-group-clean">
+              <span class="input-addon" id="prefixUpcomingOutflows">₹</span>
+              <input type="number" step="any" class="form-input-clean" id="inpUpcomingOutflows" name="upcoming_outflows" value="70000" placeholder="70000" required>
+            </div>
+            <span class="form-hint">Supplier POs, EMIs, salaries & taxes</span>
+          </div>
+
+          <!-- Field 4: Monthly Orders -->
+          <div class="form-field">
+            <label class="form-label" for="inpMonthlyOrders">
+              <i class="fa-solid fa-box" style="color:var(--primary-color);"></i> 4. Monthly Number of Orders
+            </label>
+            <div class="input-group-clean">
+              <span class="input-addon"><i class="fa-solid fa-hashtag"></i></span>
+              <input type="number" step="1" min="0" class="form-input-clean" id="inpMonthlyOrders" name="monthly_orders" value="1000" placeholder="1000" required>
+            </div>
+            <span class="form-hint">Shipments dispatched per month</span>
+          </div>
+
+          <!-- Field 5: Average Order Value -->
+          <div class="form-field">
+            <label class="form-label" for="inpAov">
+              <i class="fa-solid fa-tag" style="color:var(--warn-color);"></i> 5. Average Order Value (AOV)
+            </label>
+            <div class="input-group-clean">
+              <span class="input-addon" id="prefixAov">₹</span>
+              <input type="number" step="any" min="0" class="form-input-clean" id="inpAov" name="average_order_value" value="1000" placeholder="1000" required>
+            </div>
+            <span class="form-hint">Average ticket size per order</span>
+          </div>
+
+          <!-- Field 6: Current RTO Rate (%) -->
+          <div class="form-field">
+            <label class="form-label" for="inpRtoRate">
+              <i class="fa-solid fa-rotate-left" style="color:var(--risk-color);"></i> 6. Current RTO Rate (%)
+            </label>
+            <div class="input-group-clean">
+              <span class="input-addon">%</span>
+              <input type="number" step="0.1" min="0" max="100" class="form-input-clean" id="inpRtoRate" name="rto_rate" value="8" placeholder="8" required>
+            </div>
+            <span class="form-hint">Return-to-origin refusal percentage</span>
+          </div>
+
+          <!-- Field 7: Pending B2B Receivables -->
+          <div class="form-field">
+            <label class="form-label" for="inpPendingReceivables">
+              <i class="fa-solid fa-file-invoice-dollar" style="color:#8B5CF6;"></i> 7. Pending B2B Receivables
+            </label>
+            <div class="input-group-clean">
+              <span class="input-addon" id="prefixPendingReceivables">₹</span>
+              <input type="number" step="any" min="0" class="form-input-clean" id="inpPendingReceivables" name="pending_receivables" value="50000" placeholder="50000" required>
+            </div>
+            <span class="form-hint">Invoiced trade debtor payments due</span>
+          </div>
+
+          <!-- Form CTA Buttons -->
+          <div class="form-cta-bar">
+            <button type="submit" class="btn-analyze-main" id="btnAnalyzeCashFlow">
+              <i class="fa-solid fa-calculator"></i>
+              <span>Analyze Cash Flow</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════════════════
+         SECTION 1: DASHBOARD
+         ══════════════════════════════════════════════════════════════════════════ -->
+    <div class="tab-pane active" id="section-dashboard">
+
+      <!-- Dynamic Early Warning Alert Banner -->
+      <section class="early-warning-card" id="earlyWarningBanner" aria-live="polite">
+        <div class="alert-content-left">
+          <div class="alert-icon-box">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+          <div>
+            <div class="alert-title-text" id="warningTitle">
+              ⚠ Cash-flow pressure expected in the next 7 days.
+            </div>
+            <div class="alert-desc-text" id="warningDetails">
+              Upcoming payments may reduce your available cash significantly while receivables remain pending.
+            </div>
+          </div>
+        </div>
+        <button type="button" class="alert-action-btn" id="btnDismissWarning">
+          <i class="fa-solid fa-check"></i> Acknowledge
+        </button>
+      </section>
+
+      <!-- Cash Health Section (Cash Safety Overview: Safe / Watch / High Risk) -->
+      <section class="cash-health-section" aria-label="Cash Safety Overview">
+        <div class="health-status-wrap">
+          <span class="health-badge safe" id="healthBadge">
+            <i class="fa-solid fa-circle-check"></i> <span id="healthStatusText">Safe</span>
+          </span>
+          <div>
+            <div class="health-title" id="healthOverviewTitle">Cash Safety Overview: Operational Reserves Adequate</div>
+            <div class="health-desc" id="healthOverviewDesc">Transparent rule calculation based on upcoming debits, expected inflows, and RTO exposure.</div>
+          </div>
+        </div>
+        <button type="button" class="btn-why-trigger" id="btnExplainHealth">
+          <i class="fa-solid fa-circle-question"></i> Why?
+        </button>
+      </section>
+
+      <!-- 6 Key Dashboard KPI Cards Grid -->
+      <section class="kpi-grid-6" aria-label="Executive Financial KPIs">
+        <!-- 1. Current Balance -->
+        <div class="kpi-card highlight">
+          <div class="kpi-card-header">
+            <span class="kpi-title"><i class="fa-solid fa-wallet kpi-icon"></i> Current Balance</span>
+          </div>
+          <div class="kpi-num" id="kpiCurrentCash">₹1,00,000</div>
+          <div class="kpi-explanation">Actual liquid cash available in bank accounts.</div>
+        </div>
+
+        <!-- 2. Protected Balance -->
+        <div class="kpi-card safe">
+          <div class="kpi-card-header">
+            <span class="kpi-title"><i class="fa-solid fa-shield-halved kpi-icon" style="color:var(--safe-color);"></i> Protected Balance</span>
+          </div>
+          <div class="kpi-num" id="kpiProtectedTarget">₹75,000</div>
+          <div class="kpi-explanation">Estimated cash recommended to reserve for essential obligations.</div>
+        </div>
+
+        <!-- 3. Cash at Risk -->
+        <div class="kpi-card risk">
+          <div class="kpi-card-header">
+            <span class="kpi-title"><i class="fa-solid fa-radiation kpi-icon" style="color:var(--risk-color);"></i> Cash at Risk</span>
+          </div>
+          <div class="kpi-num" id="kpiCashAtRisk">₹18,500</div>
+          <div class="kpi-explanation">Amount potentially exposed to cash-flow risk.</div>
+        </div>
+
+        <!-- 4. Receivables at Risk -->
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-title"><i class="fa-solid fa-file-invoice-dollar kpi-icon" style="color:#8B5CF6;"></i> Receivables at Risk</span>
+          </div>
+          <div class="kpi-num" id="kpiReceivablesAtRisk">₹50,000</div>
+          <div class="kpi-explanation">Pending customer invoices exposed to turnaround lag.</div>
+        </div>
+
+        <!-- 5. RTO Exposure -->
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-title"><i class="fa-solid fa-rotate-left kpi-icon" style="color:var(--warn-color);"></i> RTO Exposure</span>
+          </div>
+          <div class="kpi-num" id="kpiRtoExposure">₹12,000</div>
+          <div class="kpi-explanation">Estimated operational shipping loss from returned orders.</div>
+        </div>
+
+        <!-- 6. Upcoming 7-Day Payments -->
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-title"><i class="fa-solid fa-receipt kpi-icon" style="color:var(--text-secondary);"></i> Upcoming 7-Day Payments</span>
+          </div>
+          <div class="kpi-num" id="kpiUpcomingDebits">₹70,000</div>
+          <div class="kpi-explanation">Committed supplier POs, EMIs, and overhead debits.</div>
+        </div>
+      </section>
+
+      <!-- AI Cash Insight Section -->
+      <section class="ai-insight-card" aria-label="AI Cash Insight">
+        <div class="ai-insight-header">
+          <i class="fa-solid fa-microchip"></i>
+          <span>AI Cash Insight</span>
+        </div>
+        <div class="ai-insight-body" id="aiCashInsightText">
+          Your projected cash position is healthy and stable. Available cash (₹1,00,000) plus expected inflows (₹40,000) reliably cover upcoming payments of ₹70,000, leaving a projected balance of ₹70,000. Maintaining an operating buffer will keep your operations fully insulated.
+        </div>
+      </section>
+
+      <!-- Top 3 Recommended Actions Section -->
+      <section class="section-panel" aria-label="Top 3 Recommended Actions">
+        <div class="panel-header-clean">
+          <div>
+            <div class="panel-title-clean">
+              <i class="fa-solid fa-list-check" style="color:var(--primary-color);"></i>
+              <span>Recommended Actions (Top 3)</span>
+            </div>
+            <div class="panel-subtitle-clean">High-impact actions to shield liquidity before obligations mature</div>
+          </div>
+          <span class="disclaimer-badge">
+            <i class="fa-solid fa-hand"></i> User Approval Required • Not Financial Advice
+          </span>
+        </div>
+
+        <div class="top3-actions-grid" id="top3ActionsContainer">
+          <!-- Action 1: Receivables -->
+          <div class="action-item-card">
+            <div>
+              <span class="action-rank-tag">Priority 1</span>
+              <div class="action-card-title">1. Follow up on pending receivables</div>
+              <div class="action-card-desc">
+                ₹50,000 is currently pending from B2B clients. Offering a 2% early settlement rebate pulls forward cash before upcoming debits mature.
+              </div>
+            </div>
+            <div class="action-card-footer">
+              <span class="action-impact-label"><i class="fa-solid fa-shield"></i> Pulls forward up to ₹49,000</span>
+              <button type="button" class="btn-approve-action" data-action-rank="1" data-action-title="Follow up on pending receivables">
+                <i class="fa-solid fa-check"></i> Approve Action
+              </button>
+            </div>
+          </div>
+
+          <!-- Action 2: RTO -->
+          <div class="action-item-card">
+            <div>
+              <span class="action-rank-tag">Priority 2</span>
+              <div class="action-card-title">2. Review high-risk COD orders</div>
+              <div class="action-card-desc">
+                RTO exposure may increase operational costs by ~₹12,000. Verify unconfirmed addresses via automated WhatsApp before dispatch.
+              </div>
+            </div>
+            <div class="action-card-footer">
+              <span class="action-impact-label"><i class="fa-solid fa-shield"></i> Saves ~₹6,600 leakage</span>
+              <button type="button" class="btn-approve-action" data-action-rank="2" data-action-title="Review high-risk COD orders">
+                <i class="fa-solid fa-check"></i> Approve Action
+              </button>
+            </div>
+          </div>
+
+          <!-- Action 3: Buffer -->
+          <div class="action-item-card">
+            <div>
+              <span class="action-rank-tag">Priority 3</span>
+              <div class="action-card-title">3. Maintain an appropriate cash buffer</div>
+              <div class="action-card-desc">
+                Upcoming payments of ₹70,000 may reduce available cash. Ensure funds are reserved for scheduled mandatory auto-debits.
+              </div>
+            </div>
+            <div class="action-card-footer">
+              <span class="action-impact-label"><i class="fa-solid fa-shield"></i> Shields ₹70,000 commitment</span>
+              <button type="button" class="btn-approve-action" data-action-rank="3" data-action-title="Maintain an appropriate cash buffer">
+                <i class="fa-solid fa-check"></i> Approve Action
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /#section-dashboard -->
+
+    <!-- ══════════════════════════════════════════════════════════════════════════
+         SECTION 2: RISK CENTER
+         ══════════════════════════════════════════════════════════════════════════ -->
+    <div class="tab-pane" id="section-risk-center">
+
+      <section class="section-panel" aria-label="Risk Center">
+        <div class="panel-header-clean">
+          <div>
+            <div class="panel-title-clean">
+              <i class="fa-solid fa-triangle-exclamation" style="color:var(--warn-color);"></i>
+              <span>Cash-Flow Risk Center</span>
+            </div>
+            <div class="panel-subtitle-clean">Detailed breakdown across D2C Returns, B2B Trade Debtors, and Bank Debits</div>
+          </div>
+          <!-- Risk Category Sub-Navigation -->
+          <div class="risk-tabs-nav">
+            <button type="button" class="risk-subtab-btn active" id="tabBtnRto" data-target="panelRiskRto">
+              <i class="fa-solid fa-rotate-left"></i> RTO Risk
+            </button>
+            <button type="button" class="risk-subtab-btn" id="tabBtnReceivables" data-target="panelRiskReceivables">
+              <i class="fa-solid fa-file-invoice-dollar"></i> Receivable Risk
+            </button>
+            <button type="button" class="risk-subtab-btn" id="tabBtnDebits" data-target="panelRiskDebits">
+              <i class="fa-solid fa-receipt"></i> Payment Risk
+            </button>
+          </div>
+        </div>
+
+        <!-- 1. RTO Risk Category Panel -->
+        <div class="risk-category-pane" id="panelRiskRto">
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-bottom:1rem;">
+            <div class="kpi-card">
+              <span class="kpi-title">Current RTO Rate</span>
+              <div class="kpi-num" id="rcRtoRate">8.0%</div>
+              <span class="kpi-explanation">Percentage of shipments refused or returned.</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-title">Estimated RTO Loss</span>
+              <div class="kpi-num" id="rcRtoLoss" style="color:var(--risk-color);">₹12,000</div>
+              <span class="kpi-explanation">Direct return shipping & restocking cost.</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-title">Flagged Risky Orders</span>
+              <div class="kpi-num" id="rcRiskyOrdersCount">80 Orders</div>
+              <span class="kpi-explanation">Predicted with high return probability.</span>
+            </div>
+          </div>
+
+          <div class="table-clean-wrapper">
+            <table class="table-clean">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Value</th>
+                  <th>Payment</th>
+                  <th>RTO Probability</th>
+                  <th>Risk Factors</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="rtoOrdersTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 2. Receivable Risk Category Panel -->
+        <div class="risk-category-pane" id="panelRiskReceivables" style="display:none;">
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-bottom:1rem;">
+            <div class="kpi-card">
+              <span class="kpi-title">Pending Receivables</span>
+              <div class="kpi-num" id="rcPendingRec">₹50,000</div>
+              <span class="kpi-explanation">Total trade receivables due from B2B clients.</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-title">Amount Potentially Delayed</span>
+              <div class="kpi-num" id="rcDelayedRec" style="color:var(--warn-color);">₹32,500</div>
+              <span class="kpi-explanation">Subject to customer payment turnaround lag.</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-title">Overdue / Imminent</span>
+              <div class="kpi-num" id="rcDueCount">3 Invoices</div>
+              <span class="kpi-explanation">Maturing within current 15-day cycle.</span>
+            </div>
+          </div>
+
+          <div class="table-clean-wrapper">
+            <table class="table-clean">
+              <thead>
+                <tr>
+                  <th>Invoice ID</th>
+                  <th>Client / Debtor</th>
+                  <th>Amount</th>
+                  <th>Due Date</th>
+                  <th>Delay Probability</th>
+                  <th>Payment History</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="receivablesTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 3. Payment Risk Category Panel -->
+        <div class="risk-category-pane" id="panelRiskDebits" style="display:none;">
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-bottom:1rem;">
+            <div class="kpi-card">
+              <span class="kpi-title">Upcoming Supplier Outflows</span>
+              <div class="kpi-num" id="rcSupplierDebits">₹29,400</div>
+              <span class="kpi-explanation">Committed purchase orders for raw materials.</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-title">Loan EMI & Debt</span>
+              <div class="kpi-num" id="rcEmiDebits">₹12,600</div>
+              <span class="kpi-explanation">Fixed banking credit line service obligations.</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-title">Total Scheduled Debits</span>
+              <div class="kpi-num" id="rcTotalDebits" style="color:var(--risk-color);">₹70,000</div>
+              <span class="kpi-explanation">Total committed disbursements in next 15 days.</span>
+            </div>
+          </div>
+
+          <div class="table-clean-wrapper">
+            <table class="table-clean">
+              <thead>
+                <tr>
+                  <th>Obligation Name</th>
+                  <th>Category</th>
+                  <th>Amount</th>
+                  <th>Due Timeline</th>
+                  <th>Status</th>
+                  <th>Debit Mechanism</th>
+                </tr>
+              </thead>
+              <tbody id="debitsTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /#section-risk-center -->
+
+    <!-- ══════════════════════════════════════════════════════════════════════════
+         SECTION 3: FUTURE CASH FORECAST
+         ══════════════════════════════════════════════════════════════════════════ -->
+    <div class="tab-pane" id="section-forecast">
+
+      <section class="section-panel" aria-label="Future Cash Balance Forecast">
+        <div class="panel-header-clean">
+          <div>
+            <div class="panel-title-clean">
+              <i class="fa-solid fa-chart-line" style="color:var(--primary-color);"></i>
+              <span>Future Cash Balance Forecast</span>
+            </div>
+            <div class="panel-subtitle-clean">Projected balance trajectory: Current → 7 Days → 15 Days → 30 Days</div>
+          </div>
+          <!-- Horizon Pills -->
+          <div class="currency-toggle">
+            <button type="button" class="curr-btn horizon-btn" data-horizon="7">7D</button>
+            <button type="button" class="curr-btn horizon-btn" data-horizon="15">15D</button>
+            <button type="button" class="curr-btn horizon-btn active" data-horizon="30">30D</button>
+          </div>
+        </div>
+
+        <!-- High-Contrast Clean Forecast Canvas -->
+        <div class="forecast-canvas-wrap">
+          <canvas id="forecastCanvas"></canvas>
+          <div id="chartTooltip" style="position:absolute; opacity:0; pointer-events:none; background:#0F172A; color:#FFFFFF; padding:8px 12px; border-radius:6px; font-size:12px; z-index:10; box-shadow:0 4px 12px rgba(0,0,0,0.15);"></div>
+        </div>
+
+        <!-- 4 Milestone Summary Cards -->
+        <div class="forecast-milestones-row">
+          <div class="milestone-box">
+            <span class="milestone-label">Current Available</span>
+            <div class="milestone-val" id="msCurrent">₹1,00,000</div>
+          </div>
+          <div class="milestone-box">
+            <span class="milestone-label">Day 7 Projected</span>
+            <div class="milestone-val" id="msDay7">₹82,000</div>
+          </div>
+          <div class="milestone-box">
+            <span class="milestone-label">Day 15 Projected</span>
+            <div class="milestone-val" id="msDay15">₹74,000</div>
+          </div>
+          <div class="milestone-box">
+            <span class="milestone-label">Day 30 Net Trajectory</span>
+            <div class="milestone-val" id="msDay30" style="color:var(--safe-color);">₹70,000</div>
+          </div>
+        </div>
+
+        <!-- Mandatory Disclaimer -->
+        <div class="chart-disclaimer">
+          "This forecast is an estimate based on the information provided."
+        </div>
+      </section>
+
+    </div><!-- /#section-forecast -->
+
+    <!-- ══════════════════════════════════════════════════════════════════════════
+         SECTION 4: WHAT HAPPENS IF...? (SCENARIO SIMULATOR)
+         ══════════════════════════════════════════════════════════════════════════ -->
+    <div class="tab-pane" id="section-what-if">
+
+      <section class="section-panel" aria-label="What happens if Scenario Simulator">
+        <div class="panel-header-clean">
+          <div>
+            <div class="panel-title-clean">
+              <i class="fa-solid fa-sliders" style="color:var(--primary-color);"></i>
+              <span>What happens if...?</span>
+            </div>
+            <div class="panel-subtitle-clean">Adjust business variables to dynamically simulate sensitivity, stress, and liquidity impacts</div>
+          </div>
+          <button type="button" class="btn-header-csv" id="btnResetSim">
+            <i class="fa-solid fa-rotate-left"></i> Reset Defaults
+          </button>
+        </div>
+
+        <div class="what-if-grid" id="simulatorMountPoint">
+          <!-- Left: Sliders Form -->
+          <div class="sim-slider-card">
+            <strong style="font-size:0.92rem; color:var(--text-primary); margin-bottom:0.25rem;">Adjust Parameters:</strong>
+
+            <!-- Slider 1: RTO Rate -->
+            <div class="slider-group-clean">
+              <div class="slider-header-clean">
+                <span><i class="fa-solid fa-rotate-left" style="color:var(--risk-color);"></i> RTO Rate (%)</span>
+                <span class="slider-val-badge" id="valSimRtoRate">8%</span>
+              </div>
+              <input type="range" class="sim-range-input" id="inputSimRtoRate" min="1" max="60" step="1" value="8">
+            </div>
+
+            <!-- Slider 2: Expected Inflow -->
+            <div class="slider-group-clean">
+              <div class="slider-header-clean">
+                <span><i class="fa-solid fa-arrow-down-left" style="color:var(--safe-color);"></i> Expected Inflow (₹)</span>
+                <span class="slider-val-badge" id="valSimInflow">₹40,000</span>
+              </div>
+              <input type="range" class="sim-range-input" id="inputSimInflow" min="5000" max="500000" step="5000" value="40000">
+            </div>
+
+            <!-- Slider 3: Upcoming Payments / Outflows -->
+            <div class="slider-group-clean">
+              <div class="slider-header-clean">
+                <span><i class="fa-solid fa-arrow-up-right-from-square" style="color:var(--risk-color);"></i> Upcoming Payment (₹)</span>
+                <span class="slider-val-badge" id="valSimOutflow">₹70,000</span>
+              </div>
+              <input type="range" class="sim-range-input" id="inputSimOutflow" min="5000" max="500000" step="5000" value="70000">
+            </div>
+
+            <!-- Slider 4: Monthly Orders -->
+            <div class="slider-group-clean">
+              <div class="slider-header-clean">
+                <span><i class="fa-solid fa-box" style="color:var(--primary-color);"></i> Monthly Order Volume</span>
+                <span class="slider-val-badge" id="valSimOrders">1,000</span>
+              </div>
+              <input type="range" class="sim-range-input" id="inputSimOrders" min="100" max="10000" step="50" value="1000">
+            </div>
+
+            <!-- Slider 5: Average Order Value -->
+            <div class="slider-group-clean">
+              <div class="slider-header-clean">
+                <span><i class="fa-solid fa-tag" style="color:var(--warn-color);"></i> Average Order Value (AOV)</span>
+                <span class="slider-val-badge" id="valSimAov">₹1,000</span>
+              </div>
+              <input type="range" class="sim-range-input" id="inputSimAov" min="200" max="10000" step="100" value="1000">
+            </div>
+
+            <button type="button" class="btn-analyze-main" id="btnSimulateBackend" style="width:100%; justify-content:center; margin-top:0.5rem;">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> SIMULATE SCENARIO
+            </button>
+          </div>
+
+          <!-- Right: Direct Comparison Cards -->
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+            <div class="sim-compare-grid">
+              <!-- Current Estimated Exposure -->
+              <div class="sim-compare-card">
+                <span class="kpi-title"><i class="fa-solid fa-circle-dot"></i> Current Estimated Exposure</span>
+                <div class="kpi-num" id="statCurrentExposure">₹12,000</div>
+                <span class="kpi-explanation">Baseline calculated RTO loss</span>
+              </div>
+
+              <!-- Scenario Exposure -->
+              <div class="sim-compare-card">
+                <span class="kpi-title"><i class="fa-solid fa-bolt" style="color:var(--primary-color);"></i> Scenario Exposure</span>
+                <div class="kpi-num" id="statScenarioExposure" style="color:var(--primary-color);">₹18,000</div>
+                <span class="kpi-explanation">Simulated stress exposure</span>
+              </div>
+
+              <!-- Difference / Net Impact Highlight -->
+              <div class="sim-diff-highlight">
+                <div>
+                  <div style="font-size:0.75rem; color:var(--primary-dark); font-weight:600; text-transform:uppercase;">Exposure Difference (Net Impact):</div>
+                  <div style="font-size:1.6rem; font-weight:800; color:var(--primary-color); font-family:'Outfit';" id="statExposureDiff">+₹6,000</div>
+                </div>
+                <div style="text-align:right;">
+                  <div style="font-size:0.75rem; color:var(--text-muted);">Updated Projected Balance:</div>
+                  <strong style="font-size:1.25rem; font-family:'Outfit';" id="statSimProjected">₹70,000</strong>
+                </div>
+              </div>
+            </div>
+
+            <div style="background:#FFFFFF; border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:1rem; font-size:0.85rem; color:var(--text-secondary); line-height:1.55;">
+              <strong style="color:var(--text-primary); display:block; margin-bottom:4px;">Simulation Summary:</strong>
+              <span id="simSummaryDynamicText">
+                Adjusting the RTO rate or upcoming obligations reflects directly on your projected cash safety buffer. Use this simulation to negotiate supplier credit windows or enforce prepaid order conversion.
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /#section-what-if -->
+
+    <!-- ══════════════════════════════════════════════════════════════════════════
+         SECTION 5: REPORTS (PRINTABLE CASH-FLOW HEALTH REPORT)
+         ══════════════════════════════════════════════════════════════════════════ -->
+    <div class="tab-pane" id="section-reports">
+
+      <section class="section-panel" aria-label="Executive Cash-Flow Report">
+        <div class="panel-header-clean">
+          <div>
+            <div class="panel-title-clean">
+              <i class="fa-solid fa-file-invoice" style="color:var(--primary-color);"></i>
+              <span>Generate Cash-Flow Report</span>
+            </div>
+            <div class="panel-subtitle-clean">Comprehensive executive summary ready for export or printing</div>
+          </div>
+          <button type="button" class="btn-analyze-main" id="btnPrintReport">
+            <i class="fa-solid fa-print"></i> <span>Print / Export PDF</span>
+          </button>
+        </div>
+
+        <!-- Printable Report Sheet -->
+        <article class="report-sheet" id="reportSheet">
+          <div class="report-header-row">
+            <div>
+              <h2 style="font-size:1.5rem; color:var(--primary-color);">CashFlowShield AI — Executive Health Report</h2>
+              <div style="font-size:0.85rem; color:var(--text-muted); margin-top:0.25rem;">
+                Scenario: <strong id="repScenarioName" style="color:var(--text-primary);">AuraThreads Apparel</strong> • Generated: <span id="repGeneratedDate">21-Sep-2026</span>
+              </div>
+            </div>
+            <div style="text-align:right;">
+              <span class="health-badge safe" id="repStatusBadge">Safe</span>
+              <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">Predictive Evaluation</div>
+            </div>
+          </div>
+
+          <!-- Balances & Metrics Table Grid -->
+          <div>
+            <h3 style="font-size:1.05rem; margin-bottom:0.75rem;">1. Key Financial Balances</h3>
+            <div class="report-table-grid">
+              <div class="report-summary-box">
+                <span class="kpi-title">Current Balance</span>
+                <div class="kpi-num" style="font-size:1.35rem;" id="repCurrentBal">₹1,00,000</div>
+              </div>
+              <div class="report-summary-box">
+                <span class="kpi-title">Protected Balance Target</span>
+                <div class="kpi-num" style="font-size:1.35rem; color:var(--safe-color);" id="repProtectedBal">₹75,000</div>
+              </div>
+              <div class="report-summary-box">
+                <span class="kpi-title">Projected Net Balance</span>
+                <div class="kpi-num" style="font-size:1.35rem; color:var(--primary-color);" id="repProjectedBal">₹70,000</div>
+              </div>
+              <div class="report-summary-box">
+                <span class="kpi-title">Cash at Risk</span>
+                <div class="kpi-num" style="font-size:1.35rem; color:var(--risk-color);" id="repCashAtRisk">₹18,500</div>
+              </div>
+              <div class="report-summary-box">
+                <span class="kpi-title">Receivables at Risk</span>
+                <div class="kpi-num" style="font-size:1.35rem;" id="repReceivablesAtRisk">₹50,000</div>
+              </div>
+              <div class="report-summary-box">
+                <span class="kpi-title">RTO Exposure</span>
+                <div class="kpi-num" style="font-size:1.35rem;" id="repRtoExposure">₹12,000</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Forecast Summary -->
+          <div>
+            <h3 style="font-size:1.05rem; margin-bottom:0.75rem;">2. 30-Day Cash Trajectory Summary</h3>
+            <div style="background:var(--bg-subtle); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:1rem; font-size:0.88rem; line-height:1.6;" id="repForecastSummaryText">
+              Current liquid reserves of ₹1,00,000 combined with ₹40,000 expected customer inflows provide safe coverage against ₹70,000 in scheduled upcoming obligations. The Day 30 milestone projects an operational reserve of ₹70,000.
+            </div>
+          </div>
+
+          <!-- Top Recommended Actions -->
+          <div>
+            <h3 style="font-size:1.05rem; margin-bottom:0.75rem;">3. Top Recommended Actions</h3>
+            <ol style="padding-left:1.25rem; font-size:0.88rem; line-height:1.6; color:var(--text-secondary);" id="repActionsList">
+              <li><strong>Follow up on pending receivables:</strong> ₹50,000 is currently pending. Offer a 2% early settlement discount to pull forward cash before scheduled debits mature.</li>
+              <li><strong>Review high-risk COD orders:</strong> Address verification recommended to mitigate RTO operational shipping drag.</li>
+              <li><strong>Maintain an appropriate cash buffer:</strong> Reserve funds for scheduled mandatory debits to avoid overdrafts.</li>
+            </ol>
+          </div>
+
+          <!-- Report Footer Disclaimers -->
+          <footer style="border-top:1px solid var(--border-subtle); padding-top:1rem; font-size:0.74rem; color:var(--text-muted); line-height:1.5;">
+            <strong>Disclaimer:</strong> Predictions and calculations are estimates based on the provided or simulated data. This report does not constitute certified accounting advice or legal financial representation. Non-custodial prototype system: no funds were moved, transferred, or blocked.
+          </footer>
+        </article>
+      </section>
+
+    </div><!-- /#section-reports -->
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       MODALS
+       ══════════════════════════════════════════════════════════════════════════ -->
+
+  <!-- 1. "Why?" Cash Safety Breakdown Modal -->
+  <div class="modal-overlay" id="whyHealthModal" aria-hidden="true" role="dialog">
+    <div class="modal-clean-box">
+      <div class="modal-header-clean">
+        <div style="font-size:1.1rem; font-weight:700; display:flex; align-items:center; gap:0.5rem;">
+          <i class="fa-solid fa-circle-question" style="color:var(--primary-color);"></i>
+          <span>Why is Cash Flow Under Pressure?</span>
+        </div>
+        <button type="button" class="modal-close-btn" id="btnCloseWhyHealth">&times;</button>
+      </div>
+      <div style="font-size:0.85rem; color:var(--text-muted);">
+        Transparent factor breakdown affecting your current Cash Safety Overview:
+      </div>
+      <div style="display:flex; flex-direction:column; gap:0.75rem;" id="whyFactorsList">
+        <!-- Dynamically populated -->
+      </div>
+      <div style="border-top:1px solid var(--border-subtle); padding-top:0.75rem; text-align:right;">
+        <button type="button" class="btn-analyze-main" id="btnAcknowledgeWhy" style="padding:0.5rem 1.25rem; font-size:0.85rem;">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. CSV Upload Modal -->
+  <div class="modal-overlay" id="csvUploadModal" aria-hidden="true" role="dialog">
+    <div class="modal-clean-box">
+      <div class="modal-header-clean">
+        <div style="font-size:1.1rem; font-weight:700; display:flex; align-items:center; gap:0.5rem;">
+          <i class="fa-solid fa-file-arrow-up" style="color:var(--primary-color);"></i>
+          <span>Upload Business Transactions & Invoices</span>
+        </div>
+        <button type="button" class="modal-close-btn" id="btnCloseCsvModal">&times;</button>
+      </div>
+
+      <!-- CSV Type Switcher -->
+      <div class="risk-tabs-nav" style="border:none; padding-bottom:0;">
+        <button type="button" class="risk-subtab-btn active" id="btnCsvTypeOrders" data-csvtype="orders">Orders CSV</button>
+        <button type="button" class="risk-subtab-btn" id="btnCsvTypeInvoices" data-csvtype="invoices">Invoices CSV</button>
+        <button type="button" class="risk-subtab-btn" id="btnCsvTypeTx" data-csvtype="transactions">Transactions CSV</button>
+      </div>
+
+      <!-- Drag & Drop Area -->
+      <div style="border:2px dashed var(--border-medium); border-radius:var(--radius-md); padding:2rem 1.5rem; text-align:center; background:var(--bg-subtle);" id="csvDropZone">
+        <i class="fa-solid fa-cloud-arrow-up" style="font-size:2rem; color:var(--primary-color); margin-bottom:0.5rem;"></i>
+        <div style="font-weight:600; font-size:0.95rem;">Drag & drop your CSV file here, or click to browse</div>
+        <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.25rem;" id="csvSampleHint">
+          Supported format: Order ID, Amount, Payment, Delivery, Previous RTO
+        </div>
+        <input type="file" id="csvFileInput" accept=".csv" style="display:none;">
+      </div>
+
+      <!-- Sample Format Preview Box -->
+      <div style="background:var(--bg-muted); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:0.75rem; font-family:monospace; font-size:0.75rem; color:var(--text-secondary);" id="csvSamplePreview">
+Order ID,Amount,Payment,Delivery,Previous RTO
+ORD001,1000,COD,Pending,No
+ORD002,1500,Online,Delivered,No
+ORD003,800,COD,Pending,Yes
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-subtle); padding-top:0.75rem;">
+        <button type="button" class="btn-header-csv" id="btnLoadSampleCsv">
+          <i class="fa-solid fa-file-code"></i> Load Sample Data
+        </button>
+        <button type="button" class="btn-analyze-main" id="btnProcessCsv" style="padding:0.5rem 1.25rem; font-size:0.85rem;">
+          Process & Update Dashboard
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Optional 3D Holographic Shield Matrix Modal -->
+  <div class="modal-overlay" id="threeDModal" aria-hidden="true" role="dialog">
+    <div class="modal-clean-box" style="max-width:850px; padding:1.25rem;">
+      <div class="modal-header-clean">
+        <div style="font-size:1.1rem; font-weight:700; display:flex; align-items:center; gap:0.5rem;">
+          <i class="fa-solid fa-cube" style="color:var(--primary-color);"></i>
+          <span>3D Holographic Shield Matrix</span>
+        </div>
+        <button type="button" class="modal-close-btn" id="btnClose3DModal">&times;</button>
+      </div>
+      <div style="position:relative; width:100%; height:450px; background:#070B14; border-radius:var(--radius-md); overflow:hidden;">
+        <div id="threeCanvasMount" style="width:100%; height:100%;"></div>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; color:var(--text-muted);">
+        <span>Click and drag to rotate the shield forcefield.</span>
+        <button type="button" class="btn-header-csv" id="btn3dDeflect">
+          <i class="fa-solid fa-shield"></i> Deflect Leaks
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Modal Container for Existing Explanations (RTO, MSME Act, etc.) -->
+  <div id="globalModalOverlay" class="modal-overlay"></div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Core Scripts (ES Modules) -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
